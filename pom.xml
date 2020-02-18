@@ -1,24 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>sample</groupId>
-    <artifactId>ejb</artifactId>
-    <version>1.0</version>
-    <packaging>pom</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-    <name>Sample EAR Project</name>
+  <groupId>sample</groupId>
+  <artifactId>ejb</artifactId>
+  <version>1.0</version>
+  <packaging>pom</packaging>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-    
-    <modules>
-        <module>ejb-ejb</module>
-        <module>ejb-war</module>
-        <module>ejb-ear</module>
-    </modules>
+  <name>Sample EAR Project</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.2.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.4</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.10.2</version>
+      </dependency>
+      <dependency>
+        <groupId>com.ibm</groupId>
+        <artifactId>ibmjzos</artifactId>
+        <version>2.4.8</version>
+      </dependency>
+      <dependency>
+        <groupId>com.ibm</groupId>
+        <artifactId>_connectorModule</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.classgraph</groupId>
+        <artifactId>classgraph</artifactId>
+        <version>4.8.62</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <repositories>
+    <repository>
+      <id>sample</id>
+      <name>Sample Project Repo</name>
+      <url>file://${project.basedir}/../ejb-ibm-libs/repository</url>
+    </repository>
+  </repositories>
+
+  <modules>
+    <module>ejb-api</module>
+    <module>ejb-client-ejb</module>
+    <module>ejb-client-war</module>
+    <module>ejb-client-ear</module>
+    <module>ejb-remote-ejb</module>
+    <module>ejb-remote-ear</module>
+    <module>ejb-remote-was-2-cics-api</module>
+    <module>ejb-remote-was-2-cics-war</module>
+    <module>ejb-remote-was-2-cics-ejb</module>
+    <module>ejb-remote-was-2-cics-ear</module>
+    <module>ejb-remote-was-2-cics-tester-war</module>
+    <module>ejb-ibm-libs</module>
+    <module>ejb-cics-2-remote-was-ejb</module>
+    <module>ejb-cics-2-remote-was-api</module>
+    <module>ejb-cics-2-remote-was-cloud-ejb</module>
+  </modules>
 </project>
