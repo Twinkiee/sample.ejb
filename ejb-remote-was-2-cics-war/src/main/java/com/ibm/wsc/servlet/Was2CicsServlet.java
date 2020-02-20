@@ -1,12 +1,9 @@
 package com.ibm.wsc.servlet;
 
-import com.ibm.wsc.ejb.Was2CicsEjb;
+import com.ibm.wsc.service.Was2CicsService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import javax.ejb.EJB;
-import javax.servlet.ServletException;
+import javax.inject.Inject;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +20,8 @@ public class Was2CicsServlet extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private static final Logger logger = LoggerFactory.getLogger(Was2CicsServlet.class);
 
-  @EJB(lookup = "was2CicsEjb")
-  private Was2CicsEjb was2Cics;
+  @Inject
+  private Was2CicsService was2CicsService;
 
   /**
    * @see HttpServlet#HttpServlet()
@@ -50,16 +47,14 @@ public class Was2CicsServlet extends HttpServlet {
 
     String registerName = request.getParameter("reg_name").trim();
     String serviceName = request.getParameter("service_name").trim();
-    String params = request.getParameter("params");
+    String i = request.getParameter("params");
 
     logger.info("Handling request with params [ {} ]", request.getParameterMap());
     PrintWriter writer = response.getWriter();
 
-//    String output = was2Cics.driveIntoCics(registerName, serviceName, params);
-    String output = was2Cics.driveIntoCics(registerName, serviceName, params.getBytes(
-        StandardCharsets.UTF_8));
+    final String returnValue = was2CicsService.callCics(registerName, serviceName, i);
 
-    writer.println(output);
+    writer.println(returnValue);
   }
 
 }

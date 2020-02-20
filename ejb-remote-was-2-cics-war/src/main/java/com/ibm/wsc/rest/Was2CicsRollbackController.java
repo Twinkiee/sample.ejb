@@ -1,8 +1,9 @@
 package com.ibm.wsc.rest;
 
-import com.ibm.wsc.ejb.Was2CicsEjb;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ibm.wsc.service.Was2CicsService;
 import javax.annotation.Resource;
-import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.transaction.HeuristicMixedException;
 import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
@@ -21,15 +22,17 @@ import org.slf4j.LoggerFactory;
  */
 @Path("/was2cics-rollback/{registerName}/{serviceName}")
 //@Transactional
-public class Was2CicsRollbackService {
+public class Was2CicsRollbackController {
 
-  private static final Logger logger = LoggerFactory.getLogger(Was2CicsRollbackService.class);
+  private static final Logger logger = LoggerFactory.getLogger(Was2CicsRollbackController.class);
+
+  @Inject
+  private Was2CicsService was2CicsService;
+
   @Resource
   private UserTransaction tx;
   //  @Resource(lookup = "db2XaDs")
 //  private DataSource dataSource;
-  @EJB(lookup = "was2CicsEjb")
-  private Was2CicsEjb was2Cics;
 
   @GET
   public String callWas2CicsEjb(
@@ -37,13 +40,14 @@ public class Was2CicsRollbackService {
       , @PathParam("serviceName") String serviceName
       , @QueryParam("i") String i) {
 
-    logger.info("Handling request with registerName [ {} ], serviceName [ {} ] and i [ {} ]", registerName,  serviceName, i);
+    logger.info("Handling request with registerName [ {} ], serviceName [ {} ] and i [ {} ]",
+        registerName, serviceName, i);
 
     try /*(final Connection connection = dataSource.getConnection())*/ {
 
       tx.begin();
 
-      final String returnValue = was2Cics.driveIntoCics(registerName, serviceName, i);
+      final String returnValue = was2CicsService.callCics(registerName, serviceName, i);
 
       logger.info("Remote EJB returned value [ {} ]", returnValue);
 
@@ -54,7 +58,7 @@ public class Was2CicsRollbackService {
       }
 
       tx.commit();
-    } catch (HeuristicMixedException | HeuristicRollbackException | RollbackException | SystemException | NotSupportedException e) {
+    } catch (HeuristicMixedException | HeuristicRollbackException | RollbackException | SystemException | NotSupportedException | JsonProcessingException e) {
       logger.error("Exception while invoking remote EJB", e);
     }
 

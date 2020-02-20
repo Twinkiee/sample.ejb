@@ -5,16 +5,14 @@ import com.ibm.AutoClosableInteraction;
 import com.ibm.websphere.ola.ConnectionSpecImpl;
 import com.ibm.websphere.ola.IndexedRecordImpl;
 import com.ibm.websphere.ola.InteractionSpecImpl;
-import com.ibm.wsc.ejb.CicsObjectWrapper;
 import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Default;
 import javax.resource.ResourceException;
 import javax.resource.cci.Connection;
 import javax.resource.cci.ConnectionFactory;
 import javax.resource.cci.Record;
 
-//@ApplicationScoped
+@ApplicationScoped
 public class CicsCallerImpl implements CicsCaller {
 
   @Resource(name = "eis/ola", type = ConnectionFactory.class)
@@ -22,7 +20,7 @@ public class CicsCallerImpl implements CicsCaller {
 
   @Override
   public Record callCicsTransaction(String registerName, String serviceName,
-      CicsObjectWrapper inputWrapper)
+      byte[] input)
       throws ResourceException {
 
     try (AutoClosableConnection connection = getConnection(registerName)
@@ -30,15 +28,15 @@ public class CicsCallerImpl implements CicsCaller {
 
       InteractionSpecImpl interactionSpec = getInteractionSpec(serviceName);
 
-      IndexedRecordImpl indexedRecord = getIndexedRecord(inputWrapper);
+      IndexedRecordImpl indexedRecord = getIndexedRecord(input);
 
       return interaction.execute(interactionSpec, indexedRecord);
     }
   }
 
-  private IndexedRecordImpl getIndexedRecord(CicsObjectWrapper inputWrapper) {
+  private IndexedRecordImpl getIndexedRecord(byte[] input) {
     IndexedRecordImpl iri = new IndexedRecordImpl();
-    iri.add(inputWrapper.getByteBuffer());
+    iri.add(input);
     return iri;
   }
 

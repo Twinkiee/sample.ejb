@@ -1,7 +1,6 @@
-package com.ibm;
+package com.ibm.wsc.cics;
 
-import com.ibm.cics.CommareaWrapperHelper;
-import com.ibm.cicsdev.bean.CicsCommunicationHandler;
+import com.ibm.wsc.bean.CommareaWrapperHelper;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
@@ -43,8 +42,10 @@ public class CicsCommunicationHandlerFactory {
 
   @PostConstruct
   private void init() {
+    logger.info("Initializing CicsCommunicationHandlers located within the package [ {} ]", CicsCommunicationHandler.class.getPackage().getName());
+
     try (ScanResult scanResult = new ClassGraph()
-        .whitelistPackages("com.ibm.cicsdev.bean")
+        .whitelistPackages(CicsCommunicationHandler.class.getPackage().getName())
         .enableClassInfo().scan()) {
 
       handlers = new LinkedList<>();

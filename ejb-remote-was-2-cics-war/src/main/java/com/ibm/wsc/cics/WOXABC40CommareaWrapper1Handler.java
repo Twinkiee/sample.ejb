@@ -1,9 +1,10 @@
-package com.ibm.cicsdev.bean;
+package com.ibm.wsc.cics;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibm.cics.CommareaWrapperHelper;
-import com.ibm.wsc.ejb.CicsObjectWrapper;
+import com.ibm.wsc.bean.CicsObjectWrapper;
+import com.ibm.wsc.bean.CommareaWrapperHelper;
+import com.ibm.wsc.bean.WOXABC40CommareaWrapper1;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Map;
@@ -104,8 +105,12 @@ public class WOXABC40CommareaWrapper1Handler implements CicsCommunicationHandler
         commareaWrapperHelper.getValue(inputMap, "IntestazioneO", String.class));
     wrapper.setWoxabc40NumAccordoI(
         commareaWrapperHelper.getValue(inputMap, "NumAccordoI", Long.class));
+
+    final Integer numCtaIntI = commareaWrapperHelper
+        .getValue(inputMap, "NumCtaIntI", Integer.class);
+    logger.debug("Setting Woxabc40NumCtaIntI with value [ {} ]", numCtaIntI);
     wrapper.setWoxabc40NumCtaIntI(
-        commareaWrapperHelper.getValue(inputMap, "NumCtaIntI", Integer.class));
+        numCtaIntI);
     wrapper.setWoxabc40OraO(commareaWrapperHelper.getValue(inputMap, "OraO", Integer.class));
     wrapper.setWoxabc40PartAvvAvereO(
         commareaWrapperHelper.getValue(inputMap, "PartAvvAvereO", BigDecimal.class));

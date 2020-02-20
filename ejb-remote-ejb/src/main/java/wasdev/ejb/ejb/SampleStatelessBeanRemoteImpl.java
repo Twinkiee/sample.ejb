@@ -36,30 +36,30 @@ public class SampleStatelessBeanRemoteImpl implements SampleStatelessBeanRemote 
 
   private static final Logger logger = LoggerFactory.getLogger(SampleStatelessBeanRemoteImpl.class);
 
-  @Resource
-  private DataSource dataSource;
+//  @Resource
+//  private DataSource dataSource;
 
-  @TransactionAttribute(MANDATORY)
+//  @TransactionAttribute(MANDATORY)
   @Override
   public String hello() {
 
     logger.info("Executing remote EJB");
 
-    try (Connection connection = dataSource.getConnection()) {
+//    try (Connection connection = dataSource.getConnection()) {
 //      connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
-      logger.info("Default schema [ {} ]", dataSource.getConnection().getSchema());
+//      logger.info("Default schema [ {} ]", dataSource.getConnection().getSchema());
 
       long time = System.nanoTime();
-      doUpdate(connection);
+//      doUpdate(connection);
       logger.info("Remote EJB update executed in [ {} ] ns", System.nanoTime() - time);
 //      doSelect(connection);
 
-    } catch (SQLException e) {
-
-      logger.error("Error while executing the remote EJB", e);
-      e.printStackTrace();
-    }
+//    } catch (SQLException e) {
+//
+//      logger.error("Error while executing the remote EJB", e);
+//      e.printStackTrace();
+//    }
 
     return "Hello REMOTE EJB World.";
   }

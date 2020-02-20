@@ -51,11 +51,11 @@ public class RemoteEjbServlet extends HttpServlet {
   @EJB(lookup = "sampleStatelessBeanRemote")
   SampleStatelessBeanRemote statelessBean;
 
-  @Resource
-  UserTransaction tx;
-
-  @Resource
-  DataSource dataSource;
+//  @Resource
+//  UserTransaction tx;
+//
+//  @Resource
+//  DataSource dataSource;
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -63,22 +63,22 @@ public class RemoteEjbServlet extends HttpServlet {
     logger.info("Client servlet started");
     PrintWriter writer = response.getWriter();
 
-    try (final Connection connection = dataSource.getConnection()) {
-      logger.info("Client connection opened");
-      tx.begin();
-      logger.info("User transaction started");
+//    try (final Connection connection = dataSource.getConnection()) {
+//      logger.info("Client connection opened");
+//      tx.begin();
+//      logger.info("User transaction started");
 //      connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
 //      doUpdate(connection);
 
-      String sql = "select * from T99TERM1 where cicsname = '1234' and banca = '$999'";
-      Statement stmt = connection.createStatement();
-      ResultSet rs = stmt.executeQuery(sql);
+//      String sql = "select * from T99TERM1 where cicsname = '1234' and banca = '$999'";
+//      Statement stmt = connection.createStatement();
+//      ResultSet rs = stmt.executeQuery(sql);
 
-      logger.info("Performed select statement");
-      rs.next();
-      logger.info("Value 1 [ {} ]", rs.getObject(1));
-      logger.info("Value 2 [ {} ]", rs.getObject(2));
+//      logger.info("Performed select statement");
+//      rs.next();
+//      logger.info("Value 1 [ {} ]", rs.getObject(1));
+//      logger.info("Value 2 [ {} ]", rs.getObject(2));
 
       logger.info("Invoking remote EJB");
       long time = System.nanoTime();
@@ -86,18 +86,18 @@ public class RemoteEjbServlet extends HttpServlet {
       String message = statelessBean.hello();
       logger.info("Remote EJB invoked in [ {} ] ns", System.nanoTime() - time);
 
-      while (rs.next()) {
-        logger.info("Value 1 [ {} ]", rs.getObject(1));
-        logger.info("Value 2 [ {} ]", rs.getObject(2));
-      }
+//      while (rs.next()) {
+//        logger.info("Value 1 [ {} ]", rs.getObject(1));
+//        logger.info("Value 2 [ {} ]", rs.getObject(2));
+//      }
 
 //      doSelect(connection);
 
       writer.println(message);
-      tx.commit();
-    } catch (HeuristicMixedException | HeuristicRollbackException | RollbackException | NotSupportedException | SystemException | SQLException e) {
-      logger.error("Exception while invoking remote EJB", e);
-    }
+//      tx.commit();
+//    } catch (HeuristicMixedException | HeuristicRollbackException | RollbackException | NotSupportedException | SystemException | SQLException e) {
+//      logger.error("Exception while invoking remote EJB", e);
+//    }
 
   }
 

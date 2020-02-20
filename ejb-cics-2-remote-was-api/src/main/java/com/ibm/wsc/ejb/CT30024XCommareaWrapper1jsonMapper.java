@@ -1,4 +1,4 @@
-package com.ibm.cicsdev.bean;
+package com.ibm.wsc.ejb;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

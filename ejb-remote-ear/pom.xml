@@ -39,10 +39,8 @@
         <version>2.10.1</version>
         <configuration>
           <version>7</version>
-          <fileNameMapping>no-version</fileNameMapping>
-<!--          <generateApplicationXml>false</generateApplicationXml>-->
+          <generateApplicationXml>false</generateApplicationXml>
           <defaultLibBundleDir>lib</defaultLibBundleDir>
-          <includeLibInApplicationXml>true</includeLibInApplicationXml>
         </configuration>
       </plugin>
     </plugins>

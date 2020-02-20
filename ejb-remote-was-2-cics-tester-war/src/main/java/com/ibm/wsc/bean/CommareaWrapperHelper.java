@@ -1,4 +1,4 @@
-package com.ibm.cics;
+package com.ibm.wsc.bean;
 
 import java.math.BigDecimal;
 import java.util.Map;

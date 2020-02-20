@@ -1,12 +1,8 @@
 package com.ibm.cics;
 
-import com.ibm.cicsdev.bean.WOXABC40CommareaWrapper1;
 import com.ibm.websphere.ola.IndexedRecordImpl;
-import com.ibm.wsc.ejb.CicsObjectWrapper;
+import com.ibm.wsc.bean.WOXABC40CommareaWrapper1;
 import java.math.BigDecimal;
-import javax.ejb.Singleton;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.context.Dependent;
 import javax.resource.cci.Record;
 
 //@ApplicationScoped
@@ -14,10 +10,9 @@ public class WOXABC40CicsCallerMock implements CicsCaller {
 
   @Override
   public Record callCicsTransaction(String registerName, String serviceName,
-      CicsObjectWrapper inputWrapper) {
+      byte[] input) {
     final IndexedRecordImpl indexedRecord = new IndexedRecordImpl();
     final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = new WOXABC40CommareaWrapper1();
-    woxabc40CommareaWrapper1.setWoxabc40NumCtaIntI(123);
     woxabc40CommareaWrapper1.setWoxabc40NumAccordoI(23);
     woxabc40CommareaWrapper1.setWoxabc40ValoreO(5);
     woxabc40CommareaWrapper1.setWoxabc40NumCtaIntI(5);

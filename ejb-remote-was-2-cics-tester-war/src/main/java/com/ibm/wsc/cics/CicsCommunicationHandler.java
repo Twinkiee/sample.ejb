@@ -1,8 +1,8 @@
-package com.ibm.cicsdev.bean;
+package com.ibm.wsc.cics;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ibm.cics.CommareaWrapperHelper;
-import com.ibm.wsc.ejb.CicsObjectWrapper;
+import com.ibm.wsc.bean.CicsObjectWrapper;
+import com.ibm.wsc.bean.CommareaWrapperHelper;
 
 public interface CicsCommunicationHandler {
 

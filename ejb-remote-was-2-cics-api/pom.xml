@@ -10,6 +10,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>ejb-remote-was-2-cics-api</artifactId>
+  <dependencies>
+    <dependency>
+      <groupId>com.ibm</groupId>
+      <artifactId>ibmjzos</artifactId>
+    </dependency>
+  </dependencies>
 
 
 </project>

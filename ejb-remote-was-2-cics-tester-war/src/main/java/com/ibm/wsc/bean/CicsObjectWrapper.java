@@ -1,4 +1,4 @@
-package com.ibm.wsc.ejb;
+package com.ibm.wsc.bean;
 
 public interface CicsObjectWrapper {
 

@@ -1,6 +1,6 @@
 package com.ibm.wsc.rest;
 
-import com.ibm.wsc.ejb.Was2CicsEjb;
+import com.ibm.wsc.service.Was2CicsService;
 import java.io.IOException;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -17,11 +17,10 @@ import org.slf4j.LoggerFactory;
 @Path("/was2cicstester/{registerName}/{serviceName}")
 public class Was2CicsTesterService {
 
-  private static final long serialVersionUID = 1L;
   private static final Logger logger = LoggerFactory.getLogger(Was2CicsTesterService.class);
 
   @Inject
-  private Was2CicsEjb was2Cics;
+  private Was2CicsService was2CicsService;
 
 
   @GET
@@ -34,7 +33,7 @@ public class Was2CicsTesterService {
 
     logger.info("Handling request with params [ {} ]", i);
 
-    return was2Cics.driveIntoCics(registerName, serviceName, i);
+    return was2CicsService.callCics(registerName, serviceName, i);
 
   }
 }

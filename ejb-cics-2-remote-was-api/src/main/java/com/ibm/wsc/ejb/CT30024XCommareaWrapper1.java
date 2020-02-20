@@ -1,4 +1,4 @@
-package com.ibm.cicsdev.bean;
+package com.ibm.wsc.ejb;
 
 import com.ibm.jzos.fields.*;
 import java.math.*;
