@@ -8,6 +8,7 @@ import com.ibm.wsc.bean.CommareaWrapperHelper;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.StringJoiner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -151,7 +152,7 @@ public class CT30X015CommareaWrapper1Handler implements CicsCommunicationHandler
         commareaWrapperHelper.getValue(inputMap, "ValoreI", Integer.class));
 
     try {
-      logger.info("Generated wrapper [ {} ]", new String(wrapper.getByteBuffer(),
+      logger.info("Generated wrapper [ {} ];\nbyte array [ {} ]", wrapper, new String(wrapper.getByteBuffer(),
           "Cp1047"));
     } catch (UnsupportedEncodingException e) {
       logger.warn("Unsupported encoding provided when printing COMMAREA wrapper");
@@ -810,6 +811,76 @@ public class CT30X015CommareaWrapper1Handler implements CicsCommunicationHandler
     @Override
     public void setCt30x015DescErroreO(String ct30x015DescErroreO) {
       ct30x015CommareaWrapper1.setCt30x015DescErroreO(ct30x015DescErroreO);
+    }
+
+    @Override
+    public String toString() {
+      return new StringJoiner(", ", CT30X015CommareaWrapper1Ext.class.getSimpleName() + "[",
+          "]")
+          .add("wlxaxmlpReturnCode='" + getWlxaxmlpReturnCode() + "'")
+          .add("wlxaxmlpReasonCode='" + getWlxaxmlpReasonCode() + "'")
+          .add("wlxaxmlpDescrizione='" + getWlxaxmlpDescrizione() + "'")
+          .add("wlxaxmlpSessionHandle='" + getWlxaxmlpSessionHandle() + "'")
+          .add("wlxaxmlpSysid='" + getWlxaxmlpSysid() + "'")
+          .add("wlxaxmlpTransazione='" + getWlxaxmlpTransazione() + "'")
+          .add("wlxaxmlpProgramma='" + getWlxaxmlpProgramma() + "'")
+          .add("wlxaxmlpProcedura='" + getWlxaxmlpProcedura() + "'")
+          .add("wlxaxmlpCanale='" + getWlxaxmlpCanale() + "'")
+          .add("wlxaxmlpIstituto='" + getWlxaxmlpIstituto() + "'")
+          .add("wlxaxmlpAbiIstituto='" + getWlxaxmlpAbiIstituto() + "'")
+          .add("wlxaxmlpEnte='" + getWlxaxmlpEnte() + "'")
+          .add("wlxaxmlpTipEnte='" + getWlxaxmlpTipEnte() + "'")
+          .add("wlxaxmlpSubEnte='" + getWlxaxmlpSubEnte() + "'")
+          .add("wlxaxmlpCab='" + getWlxaxmlpCab() + "'")
+          .add("wlxaxmlpUfficio='" + getWlxaxmlpUfficio() + "'")
+          .add("wlxaxmlpSezione='" + getWlxaxmlpSezione() + "'")
+          .add("wlxaxmlpTerm='" + getWlxaxmlpTerm() + "'")
+          .add("wlxaxmlpOpe='" + getWlxaxmlpOpe() + "'")
+          .add("wlxaxmlpDat=" + getWlxaxmlpDat())
+          .add("wlxaxmlpOra=" + getWlxaxmlpOra())
+          .add("wlxaxmlpEnteCont='" + getWlxaxmlpEnteCont() + "'")
+          .add("wlxaxmlpTipEnteCont='" + getWlxaxmlpTipEnteCont() + "'")
+          .add("wlxaxmlpSubEnteCont='" + getWlxaxmlpSubEnteCont() + "'")
+          .add("wlxaxmlpCabCont='" + getWlxaxmlpCabCont() + "'")
+          .add("wlxaxmlpDatContabile=" + getWlxaxmlpDatContabile())
+          .add("ct30x015DominioI='" + getCt30x015DominioI() + "'")
+          .add("ct30x015NodoI='" + getCt30x015NodoI() + "'")
+          .add("ct30x015PostazioneI=" + getCt30x015PostazioneI())
+          .add("ct30x015CentroI='" + getCt30x015CentroI() + "'")
+          .add("ct30x015NumMessaggioI=" + getCt30x015NumMessaggioI())
+          .add("ct30x015AccSrvI='" + getCt30x015AccSrvI() + "'")
+          .add("ct30x015ValoreI=" + getCt30x015ValoreI())
+          .add("ct30x015CodsrvsecI=" + getCt30x015CodsrvsecI())
+          .add("ct30x015CodfilsecI=" + getCt30x015CodfilsecI())
+          .add("ct30x015CodcatsecI=" + getCt30x015CodcatsecI())
+          .add("ct30x015NumpartsecI=" + getCt30x015NumpartsecI())
+          .add("ct30x015CodTipExpeI='" + getCt30x015CodTipExpeI() + "'")
+          .add("ct30x015NumCtaIntI=" + getCt30x015NumCtaIntI())
+          .add("ct30x015CodOperacionI='" + getCt30x015CodOperacionI() + "'")
+          .add("ct30x015CodReferI='" + getCt30x015CodReferI() + "'")
+          .add("ct30x015CodReferenciaOpeI='" + getCt30x015CodReferenciaOpeI() + "'")
+          .add("ct30x015TxtMovimentoI='" + getCt30x015TxtMovimentoI() + "'")
+          .add("ct30x015IndNaturalezaI='" + getCt30x015IndNaturalezaI() + "'")
+          .add("ct30x015IndPagoEfecI='" + getCt30x015IndPagoEfecI() + "'")
+          .add("ct30x015FecContableI='" + getCt30x015FecContableI() + "'")
+          .add("ct30x015FecValorI='" + getCt30x015FecValorI() + "'")
+          .add("ct30x015FecDisponibilitaI='" + getCt30x015FecDisponibilitaI() + "'")
+          .add("ct30x015FecOperacionI='" + getCt30x015FecOperacionI() + "'")
+          .add("ct30x015CodProcOrigI='" + getCt30x015CodProcOrigI() + "'")
+          .add("ct30x015CodCanaleI='" + getCt30x015CodCanaleI() + "'")
+          .add("ct30x015TotaleEuroI=" + getCt30x015TotaleEuroI())
+          .add("ct30x015CmTotaleEuroI=" + getCt30x015CmTotaleEuroI())
+          .add("ct30x015SpTotaleEuroI=" + getCt30x015SpTotaleEuroI())
+          .add("ct30x015SrTotaleEuroI=" + getCt30x015SrTotaleEuroI())
+          .add("ct30x015CodProdI='" + getCt30x015CodProdI() + "'")
+          .add("ct30x015NumOperacionO=" + getCt30x015NumOperacionO())
+          .add("ct30x015ScTotaleEuroO=" + getCt30x015ScTotaleEuroO())
+          .add("ct30x015SnTotaleEuroO=" + getCt30x015SnTotaleEuroO())
+          .add("ct30x015NumUtlMovO=" + getCt30x015NumUtlMovO())
+          .add("ct30x015IsTotaleEuroO=" + getCt30x015IsTotaleEuroO())
+          .add("ct30x015CodErrO=" + getCt30x015CodErrO())
+          .add("ct30x015DescErroreO='" + getCt30x015DescErroreO() + "'")
+          .toString();
     }
   }
 }

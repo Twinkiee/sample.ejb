@@ -1,4 +1,4 @@
-package com.ibm.wsc.ejb;
+package com.ibm.ejb.bean;
 
 import com.ibm.jzos.fields.*;
 import java.math.*;

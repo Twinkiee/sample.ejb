@@ -12,6 +12,12 @@ public class WOXABC40CicsCallerMock implements CicsCaller {
   public Record callCicsTransaction(String registerName, String serviceName,
       byte[] input) {
     final IndexedRecordImpl indexedRecord = new IndexedRecordImpl();
+    final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = getWoxabc40CommareaWrapper1();
+    indexedRecord.add(woxabc40CommareaWrapper1.getByteBuffer());
+    return indexedRecord;
+  }
+
+  public static WOXABC40CommareaWrapper1 getWoxabc40CommareaWrapper1() {
     final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = new WOXABC40CommareaWrapper1();
     woxabc40CommareaWrapper1.setWoxabc40NumAccordoI(23);
     woxabc40CommareaWrapper1.setWoxabc40ValoreO(5);
@@ -29,7 +35,6 @@ public class WOXABC40CicsCallerMock implements CicsCaller {
     woxabc40CommareaWrapper1.setWoxabc40FidoAssO(new BigDecimal("14.8"));
     woxabc40CommareaWrapper1.setWoxabc40FidoSbfO(new BigDecimal("14.8"));
     woxabc40CommareaWrapper1.setWoxabc40FidoPromiscuoO(new BigDecimal("14.8"));
-    indexedRecord.add(woxabc40CommareaWrapper1.getByteBuffer());
-    return indexedRecord;
+    return woxabc40CommareaWrapper1;
   }
 }

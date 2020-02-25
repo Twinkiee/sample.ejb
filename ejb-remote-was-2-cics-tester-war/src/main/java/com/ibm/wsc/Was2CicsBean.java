@@ -1,6 +1,6 @@
 package com.ibm.wsc;
 
-import com.ibm.wsc.ejb.Was2Cics;
+import com.ibm.waszos.ejb.Was2Cics;
 import javax.enterprise.inject.Default;
 
 /**

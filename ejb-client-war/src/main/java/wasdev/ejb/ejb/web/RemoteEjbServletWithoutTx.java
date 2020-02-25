@@ -30,11 +30,10 @@ import wasdev.ejb.api.SampleStatelessBeanRemote;
 /**
  * A servlet which injects a remote stateless EJB
  */
-@WebServlet({"/remoteEjbServlet"})
-@Transactional
-public class RemoteEjbServlet extends HttpServlet {
+@WebServlet({"/remoteEjbServletWithoutTx"})
+public class RemoteEjbServletWithoutTx extends HttpServlet {
 
-  private static final Logger logger = LoggerFactory.getLogger(RemoteEjbServlet.class);
+  private static final Logger logger = LoggerFactory.getLogger(RemoteEjbServletWithoutTx.class);
 
   private static final long serialVersionUID = 1L;
 

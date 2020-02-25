@@ -18,4 +18,6 @@ package wasdev.ejb.api;
 public interface SampleStatelessBean {
 
   String hello();
+
+  String hello(byte[] input);
 }

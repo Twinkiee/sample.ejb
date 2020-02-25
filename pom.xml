@@ -78,5 +78,7 @@
     <module>ejb-cics-2-remote-was-ejb</module>
     <module>ejb-cics-2-remote-was-api</module>
     <module>ejb-cics-2-remote-was-cloud-ejb</module>
+    <module>ejb-cics-2-remote-was-cloud-ear</module>
+    <module>ejb-cics-2-remote-was-ear</module>
   </modules>
 </project>

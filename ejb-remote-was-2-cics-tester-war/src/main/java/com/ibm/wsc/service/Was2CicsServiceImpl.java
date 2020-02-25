@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibm.wsc.bean.CicsObjectWrapper;
 import com.ibm.wsc.cics.CicsCommunicationHandler;
 import com.ibm.wsc.cics.CicsCommunicationHandlerFactory;
-import com.ibm.wsc.ejb.Was2CicsEjb;
+import com.ibm.waszos.ejb.Was2CicsEjb;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

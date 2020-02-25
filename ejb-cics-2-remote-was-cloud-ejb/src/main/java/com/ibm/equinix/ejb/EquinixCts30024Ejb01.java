@@ -1,8 +1,9 @@
-package com.ibm.wsc.ejb;
+package com.ibm.equinix.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
 
 import com.ibm.ejb.api.RemoteExecutorEjb;
+import com.ibm.ejb.bean.CT30024XCommareaWrapper1;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,17 +16,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
-@Remote(Cts30024Ejb01.class)
-public class Cts30024Ejb01 implements RemoteExecutorEjb {
+@Remote(EquinixCts30024Ejb01.class)
+public class EquinixCts30024Ejb01 implements RemoteExecutorEjb {
 
   public static final int ON_LINE = 0;
   public static final int BATCH = 1;
   public static final int REUTIL_ON = 2;
 
-  private static final Logger logger = LoggerFactory.getLogger(Cts30024Ejb01.class);
+  private static final Logger logger = LoggerFactory.getLogger(EquinixCts30024Ejb01.class);
+
   @Resource
   private DataSource dataSource;
-
 
   @Override
   @TransactionAttribute(MANDATORY)

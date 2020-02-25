@@ -1,4 +1,4 @@
-package com.ibm.wsc.ejb;
+package com.ibm.waszos.ejb;
 
 public interface Was2CicsEjb {
 
