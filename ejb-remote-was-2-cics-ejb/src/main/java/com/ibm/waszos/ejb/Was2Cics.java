@@ -2,13 +2,17 @@ package com.ibm.waszos.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
 
+import com.ibm.cics.CicsCaller;
 import com.ibm.cics.WOXABC40CicsCallerMock;
+import com.ibm.websphere.ola.IndexedRecordImpl;
 import com.ibm.wsc.bean.WOXABC40CommareaWrapper1;
 import java.io.UnsupportedEncodingException;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.inject.Inject;
+import javax.resource.cci.Record;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,8 +27,8 @@ public class Was2Cics implements Was2CicsEjb {
 
   // NOTE
   // EJBs cannot have parameter constructors
-//  @Inject
-//  private CicsCaller cicsCaller;
+  @Inject
+  private CicsCaller cicsCaller;
 
   @Override
   @TransactionAttribute(MANDATORY)
@@ -49,7 +53,11 @@ public class Was2Cics implements Was2CicsEjb {
 //      Record outputRecord = cicsCaller.callCicsTransaction(registerName, serviceName, input);
 //
 //      if (outputRecord instanceof IndexedRecordImpl) {
-//        return (byte[]) (((IndexedRecordImpl) outputRecord).get(0));
+//        final byte[] bytes = (byte[]) (((IndexedRecordImpl) outputRecord).get(0));
+//
+//        logger.info("Returning commarea [ {} ]",
+//            new String(bytes, "Cp1047"));
+//        return bytes;
 //      }
 
       final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = WOXABC40CicsCallerMock

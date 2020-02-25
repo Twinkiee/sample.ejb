@@ -1,6 +1,7 @@
 package wasdev.ejb.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
+import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -23,7 +24,7 @@ public class SampleStatelessBeanImpl implements SampleStatelessBean {
   }
 
   @Override
-  @TransactionAttribute(MANDATORY)
+  @TransactionAttribute(SUPPORTS)
   public String hello(byte[] input) {
     return "Hello LOCAL EJB World. input [ " + new String(input) + " ]" ;
   }

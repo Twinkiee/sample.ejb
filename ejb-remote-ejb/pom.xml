@@ -37,6 +37,10 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.ibm</groupId>
+      <artifactId>_connectorModule</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
