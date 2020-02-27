@@ -1,6 +1,6 @@
 package com.ibm.waszos.ejb;
 
-import com.ibm.websphere.ola.Execute;
+import com.ibm.websphere.ola.ExecuteHome;
 import java.io.UnsupportedEncodingException;
 import javax.ejb.EJBException;
 import javax.ejb.RemoteHome;
@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
-@RemoteHome(Execute.class)
+@RemoteHome(ExecuteHome.class)
 public class SampleWolaEjb {
 
   private static final Logger logger = LoggerFactory.getLogger(SampleWolaEjb.class);
