@@ -20,7 +20,7 @@ public class SampleWolaEjb {
     try {
       input = new String(arg0, "Cp1047");
       logger.info("Executing SampleWolaEjb EJB with input param [ {} ]", input);
-      return ("SampleWolaEjb").getBytes();
+      return new String(("SampleWolaEjb").getBytes(), "Cp1047").getBytes();
     } catch (UnsupportedEncodingException e) {
       logger.error("An error occurred while parsing the SampleWolaEjb input", e);
     }
