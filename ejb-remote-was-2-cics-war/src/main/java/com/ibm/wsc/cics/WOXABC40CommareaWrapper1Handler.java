@@ -22,7 +22,7 @@ public class WOXABC40CommareaWrapper1Handler implements CicsCommunicationHandler
 
   @Override
   public boolean isSuitable(String wlxaxmlpDescrizione) {
-    return "Saldoinquiry".equals(wlxaxmlpDescrizione);
+    return wlxaxmlpDescrizione != null && wlxaxmlpDescrizione.contains("Saldoinquiry");
   }
 
   @Override

@@ -40,6 +40,7 @@
     <dependency>
       <groupId>com.ibm</groupId>
       <artifactId>_connectorModule</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

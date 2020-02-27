@@ -15,7 +15,7 @@ import wasdev.ejb.cci.AutoClosableInteraction;
 @ApplicationScoped
 public class CicsCallerImpl implements CicsCaller {
 
-  @Resource(name = "eis/ola", type = ConnectionFactory.class)
+  @Resource(lookup = "eis/ola", type = ConnectionFactory.class)
   private ConnectionFactory cf;
 
   @Override

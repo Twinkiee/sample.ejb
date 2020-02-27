@@ -1,6 +1,7 @@
 package com.ibm.waszos.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
+import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import com.ibm.cics.CicsCaller;
 import com.ibm.cics.WOXABC40CicsCallerMock;
@@ -31,7 +32,7 @@ public class Was2Cics implements Was2CicsEjb {
   private CicsCaller cicsCaller;
 
   @Override
-  @TransactionAttribute(MANDATORY)
+  @TransactionAttribute(SUPPORTS)
   public byte[] driveIntoCics(String registerName, String serviceName, byte[] input) {
 
     try {
@@ -50,25 +51,25 @@ public class Was2Cics implements Was2CicsEjb {
       logger.info("Start; input params: registerName [ {} ], serviceName [ {} ], input [ {} ]",
           registerName, serviceName, new String(input, "Cp1047"));
 
-//      Record outputRecord = cicsCaller.callCicsTransaction(registerName, serviceName, input);
+      Record outputRecord = cicsCaller.callCicsTransaction(registerName, serviceName, input);
+
+      if (outputRecord instanceof IndexedRecordImpl) {
+        final byte[] bytes = (byte[]) (((IndexedRecordImpl) outputRecord).get(0));
+
+        logger.info("Returning commarea [ {} ]",
+            new String(bytes, "Cp1047"));
+        return bytes;
+      }
+
+//      final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = WOXABC40CicsCallerMock
+//          .getWoxabc40CommareaWrapper1();
+//      final byte[] byteBuffer = woxabc40CommareaWrapper1.getByteBuffer();
 //
-//      if (outputRecord instanceof IndexedRecordImpl) {
-//        final byte[] bytes = (byte[]) (((IndexedRecordImpl) outputRecord).get(0));
+//      logger.info("Returning mocked Woxabc40CommareaWrapper1 instance [ {} ]",
+//          new String(byteBuffer, "Cp1047"));
 //
-//        logger.info("Returning commarea [ {} ]",
-//            new String(bytes, "Cp1047"));
-//        return bytes;
-//      }
-
-      final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = WOXABC40CicsCallerMock
-          .getWoxabc40CommareaWrapper1();
-      final byte[] byteBuffer = woxabc40CommareaWrapper1.getByteBuffer();
-
-      logger.info("Returning mocked Woxabc40CommareaWrapper1 instance [ {} ]",
-          new String(byteBuffer, "Cp1047"));
-
-      return byteBuffer;
-//      throw new EJBException("Unrecognized output record type [ " + outputRecord + " ]");
+//      return byteBuffer;
+      throw new EJBException("Unrecognized output record type [ " + outputRecord + " ]");
     } catch (Exception e) {
       logger.error("An error occurred while performing Saldo Inquiry cics call", e);
       throw new EJBException(e);

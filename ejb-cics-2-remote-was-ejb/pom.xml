@@ -18,7 +18,7 @@
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>8.0</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>sample</groupId>
@@ -33,7 +33,11 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.29</version>
-      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.websphere.appserver.api</groupId>
+      <artifactId>com.ibm.websphere.appserver.api.zosLocalAdapters</artifactId>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 

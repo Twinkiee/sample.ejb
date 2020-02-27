@@ -37,19 +37,12 @@
     <dependency>
       <groupId>com.ibm</groupId>
       <artifactId>_connectorModule</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>sample</groupId>
       <artifactId>ejb-remote-was-2-cics-api</artifactId>
       <version>1.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.github.classgraph</groupId>
-      <artifactId>classgraph</artifactId>
     </dependency>
   </dependencies>
 

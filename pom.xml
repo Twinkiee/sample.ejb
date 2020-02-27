@@ -21,6 +21,16 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>javax</groupId>
+        <artifactId>javaee-api</artifactId>
+        <version>7.0</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+      </dependency>
+      <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
         <version>1.2.3</version>
@@ -45,6 +55,11 @@
         <groupId>com.ibm</groupId>
         <artifactId>_connectorModule</artifactId>
         <version>1.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.ibm.websphere.appserver.api</groupId>
+        <artifactId>com.ibm.websphere.appserver.api.zosLocalAdapters</artifactId>
+        <version>1.0.37</version>
       </dependency>
       <dependency>
         <groupId>io.github.classgraph</groupId>

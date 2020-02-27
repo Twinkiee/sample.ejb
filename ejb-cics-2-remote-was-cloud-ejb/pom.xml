@@ -15,19 +15,22 @@
       <groupId>sample</groupId>
       <artifactId>ejb-cics-2-remote-was-api</artifactId>
       <version>1.0</version>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
       <version>8.0</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>1.7.29</version>
-      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>sample</groupId>
+      <artifactId>ejb-remote-was-2-cics-api</artifactId>
+      <version>1.0</version>
     </dependency>
   </dependencies>
 

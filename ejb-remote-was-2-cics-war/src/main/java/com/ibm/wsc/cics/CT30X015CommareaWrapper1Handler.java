@@ -21,7 +21,7 @@ public class CT30X015CommareaWrapper1Handler implements CicsCommunicationHandler
 
   @Override
   public boolean isSuitable(String wlxaxmlpDescrizione) {
-    return "PrelievoContantiEsegui".equals(wlxaxmlpDescrizione);
+    return wlxaxmlpDescrizione != null && wlxaxmlpDescrizione.contains("PrelievoContantiEsegui");
   }
 
   @Override

@@ -26,7 +26,7 @@ public class Was2CicsServiceImpl implements Was2CicsService {
   private CicsCommunicationHandlerFactory cicsCommunicationHandlerFactory;
 
   @Override
-  @Transactional
+//  @Transactional
   public String callCics(String registerName, String serviceName, String i) throws JsonProcessingException {
 
     ObjectMapper mapper = new ObjectMapper();

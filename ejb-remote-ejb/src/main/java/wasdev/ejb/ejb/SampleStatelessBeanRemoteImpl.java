@@ -1,6 +1,7 @@
 package wasdev.ejb.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
+import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import com.ibm.websphere.ola.IndexedRecordImpl;
 import java.io.UnsupportedEncodingException;
@@ -37,7 +38,8 @@ public class SampleStatelessBeanRemoteImpl implements SampleStatelessBeanRemote 
     final String inputString = new String(input);
 
     try {
-      logger.info(new String("Executing remote EJB with param [ {} ]".getBytes(), "Cp1047"), inputString);
+      logger.info(new String("Executing remote EJB with param [ {} ]".getBytes(), "Cp1047"),
+          inputString);
     } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
@@ -47,22 +49,20 @@ public class SampleStatelessBeanRemoteImpl implements SampleStatelessBeanRemote 
 
 
   @Override
-  @TransactionAttribute(MANDATORY)
+  @TransactionAttribute(SUPPORTS)
   public String callCicsSample(byte[] input) {
-    final String inputString = new String(input);
-
     try {
-      logger.info("Start; input params: registerName [  ], serviceName [  ], input [ {} ]",
-           new String(input, "Cp1047"));
+      logger
+          .info("Start; input params: registerName [ CICSREG ], serviceName [ EC01 ], input [ {} ]",
+              new String(input, "Cp1047"));
 
-      Record outputRecord = cicsCaller.callCicsTransaction("registerName", "serviceName", input);
+      Record outputRecord = cicsCaller.callCicsTransaction("CICSREG", "EC01", input);
 
       if (outputRecord instanceof IndexedRecordImpl) {
         final byte[] bytes = (byte[]) (((IndexedRecordImpl) outputRecord).get(0));
 
         final String returnValue = new String(bytes, "Cp1047");
-        logger.info("Returning commarea [ {} ]",
-            returnValue);
+        logger.info("Returning commarea [ {} ]", returnValue);
         return returnValue;
       }
 
