@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 @Stateless
 @RemoteHome(ExecuteHome.class)
-public class SampleWolaEjb {
+public class SampleWolaEjbWithoutReturn {
 
-  private static final Logger logger = LoggerFactory.getLogger(SampleWolaEjb.class);
+  private static final Logger logger = LoggerFactory.getLogger(SampleWolaEjbWithoutReturn.class);
 
   public byte[] execute(byte[] arg0) {
 
@@ -20,7 +20,7 @@ public class SampleWolaEjb {
     try {
       input = new String(arg0, "Cp1047");
       logger.info("Executing SampleWolaEjb EJB with input param [ {} ]", input);
-      return ("SampleWolaEjb").getBytes();
+      return new byte[0];
     } catch (UnsupportedEncodingException e) {
       logger.error("An error occurred while parsing the SampleWolaEjb input", e);
     }
