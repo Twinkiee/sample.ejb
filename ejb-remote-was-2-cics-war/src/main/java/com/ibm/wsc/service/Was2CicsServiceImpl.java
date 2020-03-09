@@ -3,14 +3,13 @@ package com.ibm.wsc.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ibm.waszos.ejb.Was2CicsEjb;
 import com.ibm.wsc.bean.CicsObjectWrapper;
 import com.ibm.wsc.cics.CicsCommunicationHandler;
 import com.ibm.wsc.cics.CicsCommunicationHandlerFactory;
-import com.ibm.waszos.ejb.Was2CicsEjb;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +26,8 @@ public class Was2CicsServiceImpl implements Was2CicsService {
 
   @Override
 //  @Transactional
-  public String callCics(String registerName, String serviceName, String i) throws JsonProcessingException {
+  public String callCics(String registerName, String serviceName, String i)
+      throws JsonProcessingException {
 
     ObjectMapper mapper = new ObjectMapper();
     JsonNode rootNode = mapper.readTree(i);
@@ -35,6 +35,8 @@ public class Was2CicsServiceImpl implements Was2CicsService {
     logger.debug("Parsed root node [ {} ]", rootNode);
     JsonNode wlxaxmlpDescrizione = rootNode.path("wlxaxmlpDescrizione");
     logger.debug("Parsed wlxaxmlpDescrizione node [ {} ]", wlxaxmlpDescrizione);
+    JsonNode wlxaxmlpIstituto = rootNode.path("wlxaxmlpIstituto");
+    logger.debug("Parsed wlxaxmlpIstituto node [ {} ]", wlxaxmlpDescrizione);
 
     final CicsCommunicationHandler communicationHandler = cicsCommunicationHandlerFactory
         .getHandlerInstance(wlxaxmlpDescrizione.textValue());
@@ -44,7 +46,8 @@ public class Was2CicsServiceImpl implements Was2CicsService {
     logger.info("Calling remote EJB with input [ {} ]", inputWrapper);
     long start = System.nanoTime();
     final byte[] bytes = was2Cics
-        .driveIntoCics(registerName, serviceName, inputWrapper.getByteBuffer());
+        .driveIntoCics(registerName, serviceName, wlxaxmlpIstituto.textValue(),
+            inputWrapper.getByteBuffer());
     logger.info("Remote EJB call executed in [ {} ] ns", System.nanoTime() - start);
     return getResponse(mapper, communicationHandler, bytes);
   }
