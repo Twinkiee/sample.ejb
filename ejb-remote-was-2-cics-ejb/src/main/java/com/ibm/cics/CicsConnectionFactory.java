@@ -13,9 +13,9 @@ public class CicsConnectionFactory {
 
   @Resource(lookup = "eis/ola_0019", type = ConnectionFactory.class)
   private ConnectionFactory cf0019;
-  @Resource(lookup = "is/ola_0062", type = ConnectionFactory.class)
+  @Resource(lookup = "eis/ola_0062", type = ConnectionFactory.class)
   private ConnectionFactory cf0062;
-  @Resource(lookup = "is/ola", type = ConnectionFactory.class)
+  @Resource(lookup = "eis/ola", type = ConnectionFactory.class)
   private ConnectionFactory defaultCf;
 
   public AutoClosableConnection getConnection(String codIstituto, String registerName) throws ResourceException {
