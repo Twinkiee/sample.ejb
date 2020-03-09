@@ -1,7 +1,7 @@
-package com.ibm.wsc.rest;
+package com.sample.ejb.rest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ibm.wsc.service.Was2CicsService;
+import com.sample.ejb.service.Was2CicsService;
 import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.transaction.HeuristicMixedException;
@@ -9,6 +9,7 @@ import javax.transaction.HeuristicRollbackException;
 import javax.transaction.NotSupportedException;
 import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
+import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Rest service implementation class Was2CicsServlet
  */
 @Path("/was2cics-rollback/{registerName}/{serviceName}")
-//@Transactional
+@Transactional
 public class Was2CicsRollbackController {
 
   private static final Logger logger = LoggerFactory.getLogger(Was2CicsRollbackController.class);
@@ -29,8 +30,8 @@ public class Was2CicsRollbackController {
   @Inject
   private Was2CicsService was2CicsService;
 
-  @Resource
-  private UserTransaction tx;
+//  @Resource
+//  private UserTransaction tx;
   //  @Resource(lookup = "db2XaDs")
 //  private DataSource dataSource;
 
@@ -45,7 +46,7 @@ public class Was2CicsRollbackController {
 
     try /*(final Connection connection = dataSource.getConnection())*/ {
 
-      tx.begin();
+//      tx.begin();
 
       final String returnValue = was2CicsService.callCics(registerName, serviceName, i);
 
@@ -53,8 +54,8 @@ public class Was2CicsRollbackController {
 
       doRollback(i, returnValue);
 
-      tx.commit();
-    } catch (HeuristicMixedException | HeuristicRollbackException | RollbackException | SystemException | NotSupportedException | JsonProcessingException e) {
+//      tx.commit();
+    } catch (/*HeuristicMixedException | HeuristicRollbackException | RollbackException | SystemException | NotSupportedException | */JsonProcessingException e) {
       logger.error("Exception while invoking remote EJB", e);
     }
 

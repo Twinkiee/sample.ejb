@@ -9,27 +9,25 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>ejb-remote-was-2-cics-war</artifactId>
-
+  <artifactId>equinix-war</artifactId>
   <packaging>war</packaging>
 
-  <name>EJB Client WAR Module</name>
+  <name>Equinix WAR Module</name>
 
   <dependencies>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-    </dependency>
-    <dependency>
       <groupId>sample</groupId>
-      <artifactId>ejb-remote-was-2-cics-api</artifactId>
+      <artifactId>api</artifactId>
       <version>1.0</version>
     </dependency>
     <dependency>
       <groupId>javax</groupId>
       <artifactId>javaee-api</artifactId>
-      <version>7.0</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -38,10 +36,6 @@
     <dependency>
       <groupId>io.github.classgraph</groupId>
       <artifactId>classgraph</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.ibm</groupId>
-      <artifactId>ibmjzos</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -63,4 +57,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

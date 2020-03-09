@@ -1,11 +1,11 @@
-package com.ibm.wsc.cics;
+package com.sample.ejb.cics;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibm.wsc.bean.CicsObjectWrapper;
-import com.ibm.wsc.bean.CommareaWrapperHelper;
-import com.ibm.wsc.bean.WOXABC40CommareaWrapper1;
+import com.sample.ejb.bean.CicsObjectWrapper;
+import com.sample.ejb.bean.CommareaWrapperHelper;
+import com.sample.ejb.bean.WOXABC40CommareaWrapper1;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Map;

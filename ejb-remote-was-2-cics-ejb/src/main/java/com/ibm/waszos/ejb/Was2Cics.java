@@ -1,12 +1,9 @@
 package com.ibm.waszos.ejb;
 
-import static javax.ejb.TransactionAttributeType.MANDATORY;
 import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import com.ibm.cics.CicsCaller;
-import com.ibm.cics.WOXABC40CicsCallerMock;
 import com.ibm.websphere.ola.IndexedRecordImpl;
-import com.ibm.wsc.bean.WOXABC40CommareaWrapper1;
 import java.io.UnsupportedEncodingException;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
@@ -54,11 +51,7 @@ public class Was2Cics implements Was2CicsEjb {
       Record outputRecord = cicsCaller.callCicsTransaction(registerName, serviceName, input);
 
       if (outputRecord instanceof IndexedRecordImpl) {
-        final byte[] bytes = (byte[]) (((IndexedRecordImpl) outputRecord).get(0));
-
-        logger.info("Returning commarea [ {} ]",
-            new String(bytes, "Cp1047"));
-        return bytes;
+        return returnCommarea((IndexedRecordImpl) outputRecord);
       }
 
 //      final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = WOXABC40CicsCallerMock
@@ -74,5 +67,13 @@ public class Was2Cics implements Was2CicsEjb {
       logger.error("An error occurred while performing Saldo Inquiry cics call", e);
       throw new EJBException(e);
     }
+  }
+
+  private byte[] returnCommarea(IndexedRecordImpl outputRecord)
+      throws UnsupportedEncodingException {
+    final byte[] bytes = (byte[]) (outputRecord.get(0));
+
+    logger.info("Returning commarea [ {} ]", new String(bytes, "Cp1047"));
+    return bytes;
   }
 }

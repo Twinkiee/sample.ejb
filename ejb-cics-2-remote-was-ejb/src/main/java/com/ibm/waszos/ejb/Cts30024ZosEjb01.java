@@ -24,6 +24,10 @@ public class Cts30024ZosEjb01 {
     final byte[] returnValue = remoteExecutor.execute(arg0);
 
     logger.info("Remote EquinixCts30024Ejb01 EJB call executed in [ {} ] ns", System.nanoTime() - start);
+    return returnCommarea(returnValue);
+  }
+
+  private byte[] returnCommarea(byte[] returnValue) {
     return returnValue;
   }
 }

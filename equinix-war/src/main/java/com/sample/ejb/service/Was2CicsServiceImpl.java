@@ -1,16 +1,15 @@
-package com.ibm.wsc.service;
+package com.sample.ejb.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibm.wsc.bean.CicsObjectWrapper;
-import com.ibm.wsc.cics.CicsCommunicationHandler;
-import com.ibm.wsc.cics.CicsCommunicationHandlerFactory;
-import com.ibm.waszos.ejb.Was2CicsEjb;
+import com.sample.ejb.api.Was2CicsEjb;
+import com.sample.ejb.bean.CicsObjectWrapper;
+import com.sample.ejb.cics.CicsCommunicationHandler;
+import com.sample.ejb.cics.CicsCommunicationHandlerFactory;
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

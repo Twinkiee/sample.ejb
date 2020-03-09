@@ -1,4 +1,4 @@
-package com.ibm.wsc.bean;
+package com.sample.ejb.bean;
 
 import java.math.BigDecimal;
 import java.util.Map;
