@@ -3,7 +3,6 @@ package com.ibm.cics;
 import com.ibm.websphere.ola.IndexedRecordImpl;
 import com.ibm.wsc.bean.CT30X015CommareaWrapper1;
 import java.math.BigDecimal;
-import javax.enterprise.context.ApplicationScoped;
 import javax.resource.cci.Record;
 
 //@ApplicationScoped
@@ -11,7 +10,7 @@ public class CT30X015CicsCallerMock implements CicsCaller {
 
   @Override
   public Record callCicsTransaction(String registerName, String serviceName,
-      byte[] input) {
+      String codIstituto, byte[] input) {
     final IndexedRecordImpl indexedRecord = new IndexedRecordImpl();
     final CT30X015CommareaWrapper1 ct30x015CommareaWrapper1 = new CT30X015CommareaWrapper1();
     ct30x015CommareaWrapper1.setCt30x015CmTotaleEuroI(new BigDecimal("12.8"));

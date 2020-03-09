@@ -1,13 +1,9 @@
 package com.ibm.waszos.ejb;
 
-import static javax.ejb.TransactionAttributeType.MANDATORY;
 import static javax.ejb.TransactionAttributeType.SUPPORTS;
 
 import com.ibm.cics.CicsCaller;
-import com.ibm.cics.WOXABC40CicsCallerMock;
 import com.ibm.websphere.ola.IndexedRecordImpl;
-import com.ibm.wsc.bean.WOXABC40CommareaWrapper1;
-import java.io.UnsupportedEncodingException;
 import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
@@ -33,25 +29,15 @@ public class Was2Cics implements Was2CicsEjb {
 
   @Override
   @TransactionAttribute(SUPPORTS)
-  public byte[] driveIntoCics(String registerName, String serviceName, byte[] input) {
+  public byte[] driveIntoCics(String registerName, String serviceName, String codIstituto,
+      byte[] input) {
 
     try {
-      System.out.println(
-          "Start; input params: registerName [ " + registerName + " ], serviceName [ " + serviceName
-              + " ], input [ " + new String(input, "Cp1047") + " ]");
-    } catch (UnsupportedEncodingException e) {
+      logger.info(
+          "Start; input params: registerName [ {} ], serviceName [ {} ], codIstituto [ {} ], input [ {} ]",
+          registerName, serviceName, codIstituto, new String(input, "Cp1047"));
 
-      System.out.println(
-          "Start; input params: registerName [ " + registerName + " ], serviceName [ " + serviceName
-              + " ]");
-      e.printStackTrace();
-    }
-
-    try {
-      logger.info("Start; input params: registerName [ {} ], serviceName [ {} ], input [ {} ]",
-          registerName, serviceName, new String(input, "Cp1047"));
-
-      Record outputRecord = cicsCaller.callCicsTransaction(registerName, serviceName, input);
+      Record outputRecord = cicsCaller.callCicsTransaction(registerName, serviceName, codIstituto, input);
 
       if (outputRecord instanceof IndexedRecordImpl) {
         final byte[] bytes = (byte[]) (((IndexedRecordImpl) outputRecord).get(0));

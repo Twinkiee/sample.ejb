@@ -10,7 +10,7 @@ public class WOXABC40CicsCallerMock implements CicsCaller {
 
   @Override
   public Record callCicsTransaction(String registerName, String serviceName,
-      byte[] input) {
+      String codIstituto, byte[] input) {
     final IndexedRecordImpl indexedRecord = new IndexedRecordImpl();
     final WOXABC40CommareaWrapper1 woxabc40CommareaWrapper1 = getWoxabc40CommareaWrapper1();
     indexedRecord.add(woxabc40CommareaWrapper1.getByteBuffer());

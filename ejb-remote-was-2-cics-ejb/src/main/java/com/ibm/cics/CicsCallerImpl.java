@@ -2,28 +2,30 @@ package com.ibm.cics;
 
 import com.ibm.AutoClosableConnection;
 import com.ibm.AutoClosableInteraction;
-import com.ibm.websphere.ola.ConnectionSpecImpl;
 import com.ibm.websphere.ola.IndexedRecordImpl;
 import com.ibm.websphere.ola.InteractionSpecImpl;
-import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.resource.ResourceException;
 import javax.resource.cci.Connection;
-import javax.resource.cci.ConnectionFactory;
 import javax.resource.cci.Record;
 
 @ApplicationScoped
 public class CicsCallerImpl implements CicsCaller {
 
-  @Resource(lookup = "eis/ola", type = ConnectionFactory.class)
-  private ConnectionFactory cf;
+  private final CicsConnectionFactory cicsConnectionFactory;
+
+  @Inject
+  public CicsCallerImpl(CicsConnectionFactory cicsConnectionFactory) {
+    this.cicsConnectionFactory = cicsConnectionFactory;
+  }
 
   @Override
   public Record callCicsTransaction(String registerName, String serviceName,
-      byte[] input)
+      String codIstituto, byte[] input)
       throws ResourceException {
 
-    try (AutoClosableConnection connection = getConnection(registerName)
+    try (AutoClosableConnection connection = cicsConnectionFactory.getConnection(codIstituto, registerName)
         ; AutoClosableInteraction interaction = getInteraction(connection)) {
 
       InteractionSpecImpl interactionSpec = getInteractionSpec(serviceName);
@@ -50,13 +52,4 @@ public class CicsCallerImpl implements CicsCaller {
     return isi;
   }
 
-  private AutoClosableConnection getConnection(String registerName) throws ResourceException {
-    ConnectionSpecImpl csi = new ConnectionSpecImpl();
-
-    csi.setRegisterName(registerName);
-
-    csi.setConnectionWaitTimeout(20);
-
-    return new AutoClosableConnection(cf.getConnection(csi));
-  }
 }

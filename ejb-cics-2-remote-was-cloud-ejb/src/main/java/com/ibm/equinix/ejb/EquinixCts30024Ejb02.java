@@ -94,7 +94,8 @@ public class EquinixCts30024Ejb02 implements RemoteExecutorEjb {
     ct10002XCommareaWrapper1.setNumCtaInt(ct30024XCommareaWrapper1.getNumCtaInt());
     ct10002XCommareaWrapper1.setCodEmpresa(ct30024XCommareaWrapper1.getCodEmpresa());
 
-    was2Cics.driveIntoCics("CICSREG", "WLMXMULT", ct10002XCommareaWrapper1.getByteBuffer());
+    was2Cics.driveIntoCics("CICSREG", "CTS10002", "0062",
+        ct10002XCommareaWrapper1.getByteBuffer());
 
     return BigDecimal.TEN;
   }

@@ -34,14 +34,20 @@ public class Was2CicsServiceImpl implements Was2CicsService {
     logger.debug("Parsed root node [ {} ]", rootNode);
     JsonNode wlxaxmlpDescrizione = rootNode.path("wlxaxmlpDescrizione");
     logger.debug("Parsed wlxaxmlpDescrizione node [ {} ]", wlxaxmlpDescrizione);
+    JsonNode wlxaxmlpIstituto = rootNode.path("wlxaxmlpIstituto");
+    logger.debug("Parsed wlxaxmlpIstituto node [ {} ]", wlxaxmlpDescrizione);
 
     final CicsCommunicationHandler communicationHandler = cicsCommunicationHandlerFactory
         .getHandlerInstance(wlxaxmlpDescrizione.textValue());
 
     CicsObjectWrapper inputWrapper = communicationHandler.getWrapperInstance(i);
 
+    logger.info("Calling remote EJB with input [ {} ]", inputWrapper);
+    long start = System.nanoTime();
     final byte[] bytes = was2Cics
-        .driveIntoCics(registerName, serviceName, inputWrapper.getByteBuffer());
+        .driveIntoCics(registerName, serviceName, wlxaxmlpIstituto.textValue(),
+            inputWrapper.getByteBuffer());
+    logger.info("Remote EJB call executed in [ {} ] ns", System.nanoTime() - start);
     return mapper.writeValueAsString(communicationHandler.getWrapperInstance(bytes));
   }
 }
