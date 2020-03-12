@@ -110,7 +110,7 @@ public class CT30X015CommareaWrapper1Handler implements CicsCommunicationHandler
     wrapper.setCt30x015CodProdI(
         commareaWrapperHelper.getValue(inputMap, "ct30x015CodProdI", String.class));
     wrapper.setCt30x015CodReferenciaOpeI(
-        commareaWrapperHelper.getValue(inputMap, "ct30x015CodReferencia", String.class));
+        commareaWrapperHelper.getValue(inputMap, "ct30x015CodReferenciaOpeI", String.class));
     wrapper.setCt30x015CodReferI(
         commareaWrapperHelper.getValue(inputMap, "ct30x015CodReferI", String.class));
     wrapper.setCt30x015CodsrvsecI(
@@ -124,13 +124,13 @@ public class CT30X015CommareaWrapper1Handler implements CicsCommunicationHandler
     wrapper.setCt30x015FecContableI(
         commareaWrapperHelper.getValue(inputMap, "ct30x015FecContableI", String.class));
     wrapper.setCt30x015FecDisponibilitaI(
-        commareaWrapperHelper.getValue(inputMap, "ct30x015FecDisponibil", String.class));
+        commareaWrapperHelper.getValue(inputMap, "ct30x015FecDisponibilitaI", String.class));
     wrapper.setCt30x015FecOperacionI(
         commareaWrapperHelper.getValue(inputMap, "ct30x015FecOperacionI", String.class));
     wrapper.setCt30x015FecValorI(
         commareaWrapperHelper.getValue(inputMap, "ct30x015FecValorI", String.class));
     wrapper.setCt30x015IndNaturalezaI(
-        commareaWrapperHelper.getValue(inputMap, "ct30x015IndNaturaleza", String.class));
+        commareaWrapperHelper.getValue(inputMap, "ct30x015IndNaturalezaI", String.class));
     wrapper.setCt30x015IndPagoEfecI(
         commareaWrapperHelper.getValue(inputMap, "ct30x015IndPagoEfecI", String.class));
     wrapper.setCt30x015IsTotaleEuroO(
