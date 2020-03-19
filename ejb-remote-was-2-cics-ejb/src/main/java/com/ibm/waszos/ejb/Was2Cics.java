@@ -30,16 +30,17 @@ public class Was2Cics implements Was2CicsEjb {
 
   @Override
   @TransactionAttribute(SUPPORTS)
-  public byte[] driveIntoCics(String registerName, String serviceName, String codIstituto,
+  public byte[] driveIntoCics(String registerName, String serviceName/*, String codIstituto*/,
       byte[] input) {
 
     try {
       logger.info(
-          "Start; input params: registerName [ {} ], serviceName [ {} ], codIstituto [ {} ], input [ {} ]",
-          registerName, serviceName, codIstituto, new String(input, "Cp1047"));
+          "Start; input params: registerName [ {} ], serviceName [ {} ], input [ {} ]",
+//          "Start; input params: registerName [ {} ], serviceName [ {} ], codIstituto [ {} ], input [ {} ]",
+          registerName, serviceName/*, codIstituto*/, new String(input, "Cp1047"));
 
       Record outputRecord = cicsCaller
-          .callCicsTransaction(registerName, serviceName, codIstituto, input);
+          .callCicsTransaction(registerName, serviceName/*, codIstituto*/, input);
 
       if (outputRecord instanceof IndexedRecordImpl) {
         return returnCommarea((IndexedRecordImpl) outputRecord);

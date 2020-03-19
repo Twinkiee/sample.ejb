@@ -6,5 +6,5 @@ import javax.resource.cci.Record;
 public interface CicsCaller {
 
   Record callCicsTransaction(String registerName, String serviceName,
-      String codIstituto, byte[] input) throws ResourceException;
+      /*String codIstituto,*/ byte[] input) throws ResourceException;
 }

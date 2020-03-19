@@ -99,5 +99,7 @@
     <module>equinix-war</module>
     <module>equinix-ejb</module>
     <module>equinix-ear</module>
+    <module>was-zos-ejb</module>
+    <module>was-zos-ear</module>
   </modules>
 </project>

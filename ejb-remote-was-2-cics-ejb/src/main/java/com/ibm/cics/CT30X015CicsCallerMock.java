@@ -10,7 +10,7 @@ public class CT30X015CicsCallerMock implements CicsCaller {
 
   @Override
   public Record callCicsTransaction(String registerName, String serviceName,
-      String codIstituto, byte[] input) {
+      /*String codIstituto,*/ byte[] input) {
     final IndexedRecordImpl indexedRecord = new IndexedRecordImpl();
     final CT30X015CommareaWrapper1 ct30x015CommareaWrapper1 = new CT30X015CommareaWrapper1();
     ct30x015CommareaWrapper1.setCt30x015CmTotaleEuroI(new BigDecimal("12.8"));

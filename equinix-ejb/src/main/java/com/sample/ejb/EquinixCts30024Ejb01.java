@@ -1,17 +1,13 @@
-package ejb;
+package com.sample.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
 
 import com.sample.ejb.api.RemoteExecutorEjb;
-import com.sample.ejb.bean.CT10002XCommareaWrapper1;
 import com.sample.ejb.bean.CT30024XCommareaWrapper1;
-import com.sample.ejb.api.Was2CicsEjb;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.annotation.Resource;
-import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -20,42 +16,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
-@Remote(EquinixCts30024Ejb02.class)
-public class EquinixCts30024Ejb02 implements RemoteExecutorEjb {
+@Remote(EquinixCts30024Ejb01.class)
+public class EquinixCts30024Ejb01 implements RemoteExecutorEjb {
 
   public static final int ON_LINE = 0;
   public static final int BATCH = 1;
   public static final int REUTIL_ON = 2;
 
-  private static final Logger logger = LoggerFactory.getLogger(EquinixCts30024Ejb02.class);
+  private static final Logger logger = LoggerFactory.getLogger(EquinixCts30024Ejb01.class);
 
   @Resource
   private DataSource dataSource;
-
-  @EJB(lookup = "was2CicsEjb")
-  private Was2CicsEjb was2Cics;
 
   @Override
   @TransactionAttribute(MANDATORY)
   public byte[] execute(byte[] input) {
     logger.info("Executing remote EJB");
 
-    CT30024XCommareaWrapper1 ct30024XCommareaWrapper1 = new CT30024XCommareaWrapper1(input);
+    CT30024XCommareaWrapper1 wrapper = new CT30024XCommareaWrapper1(input);
 
     try (Connection connection = dataSource.getConnection()) {
+//      connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 
       logger.info("Default schema [ {} ]", dataSource.getConnection().getSchema());
 
-      logger.info("Calling CICS module 'A2121-OBTENER-SALDO'");
       long time = System.nanoTime();
-      final BigDecimal saldo = retrieveSaldo(ct30024XCommareaWrapper1);
-      logger.info("CICS module 'A2121-OBTENER-SALDO' called in [ {} ]", System.nanoTime() - time);
-
-      ct30024XCommareaWrapper1.setSaldo(saldo);
-
-      time = System.nanoTime();
-      doUpdate(connection, ct30024XCommareaWrapper1);
+      doUpdate(connection, wrapper);
       logger.info("Remote EJB update executed in [ {} ] ns", System.nanoTime() - time);
+//      doSelect(connection);
 
     } catch (SQLException e) {
 
@@ -63,40 +51,7 @@ public class EquinixCts30024Ejb02 implements RemoteExecutorEjb {
       e.printStackTrace();
     }
 
-    return ct30024XCommareaWrapper1.getByteBuffer();
-  }
-
-  // TODO Complete implementation with returning value
-  private BigDecimal retrieveSaldo(CT30024XCommareaWrapper1 ct30024XCommareaWrapper1) {
-
-    final CT10002XCommareaWrapper1 ct10002XCommareaWrapper1 = new CT10002XCommareaWrapper1();
-
-//      *-- LETTURA DEL SALDO DEL CONTO CON SERVIZIO CTS10002
-//           MOVE COD-TIP-EXPE OF TL-T08CT006     OF INPUT-TXN
-//             TO COD-TIP-EXPE OF RES-MEN-CT1002I OF INPUT-TXN-10102
-//
-//           MOVE NUM-CTA-INT  OF TL-T08CT006     OF INPUT-TXN
-//             TO NUM-CTA-INT  OF RES-MEN-CT1002I OF INPUT-TXN-10102
-//
-//           MOVE COD-EMPRESA  OF TL-T08CT006     OF INPUT-TXN
-//             TO COD-EMPRESA  OF RES-MEN-CT1002I OF INPUT-TXN-10102
-//
-//           &AQENVIAR(1010,2)
-//           IF FNDSEVEREERRORCODE NOT EQUAL TO FND-SEVERITY-OK THEN
-//ERRMAK        MOVE 'A2121-OBTENER-SALDO 13' TO LOG-APPL-DATA
-//              &AQERROR(ERROR,FNDERRORMSGNUM,CT0009P)
-//           END-IF.
-//
-//           MOVE SALCONTABLE OF OUTPUT-TXN-10102
-//             TO WS-SALDO.
-
-    ct10002XCommareaWrapper1.setCodTipExpe(ct30024XCommareaWrapper1.getCodTipExpe());
-    ct10002XCommareaWrapper1.setNumCtaInt(ct30024XCommareaWrapper1.getNumCtaInt());
-    ct10002XCommareaWrapper1.setCodEmpresa(ct30024XCommareaWrapper1.getCodEmpresa());
-
-    was2Cics.driveIntoCics("CICSREG", "WLMXMULT", ct10002XCommareaWrapper1.getByteBuffer());
-
-    return BigDecimal.TEN;
+    return wrapper.getByteBuffer();
   }
 
 

@@ -1,4 +1,4 @@
-package ejb;
+package com.sample.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
 

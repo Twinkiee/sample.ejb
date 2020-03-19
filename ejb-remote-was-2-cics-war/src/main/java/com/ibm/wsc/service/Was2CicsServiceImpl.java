@@ -46,7 +46,7 @@ public class Was2CicsServiceImpl implements Was2CicsService {
     logger.info("Calling remote EJB with input [ {} ]", inputWrapper);
     long start = System.nanoTime();
     final byte[] bytes = was2Cics
-        .driveIntoCics(registerName, serviceName, wlxaxmlpIstituto.textValue(),
+        .driveIntoCics(registerName, serviceName/*, wlxaxmlpIstituto.textValue()*/,
             inputWrapper.getByteBuffer());
     logger.info("Remote EJB call executed in [ {} ] ns", System.nanoTime() - start);
     return getResponse(mapper, communicationHandler, bytes);

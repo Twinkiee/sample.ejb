@@ -75,7 +75,7 @@ public class EquinixCts30024Ejb03 implements RemoteExecutorEjb {
 
   private String getTimestamp() {
     try {
-      return new String(was2Cics.driveIntoCics("CICSREG", "EC01", "DEFAULT", new byte [18]), "Cp1047");
+      return new String(was2Cics.driveIntoCics("CICSREG", "EC01", /*"DEFAULT",*/ new byte [18]), "Cp1047");
     } catch (UnsupportedEncodingException e) {
       logger.error("An error occurred when encoding timestamp module (EC01) return value", e);
       throw new EJBException(e);
@@ -110,7 +110,7 @@ public class EquinixCts30024Ejb03 implements RemoteExecutorEjb {
     ct10002XCommareaWrapper1.setNumCtaInt(ct30024XCommareaWrapper1.getNumCtaInt());
     ct10002XCommareaWrapper1.setCodEmpresa(ct30024XCommareaWrapper1.getCodEmpresa());
 
-    was2Cics.driveIntoCics("CICSREG", "CTS10002", "DEFAULT", ct10002XCommareaWrapper1.getByteBuffer());
+    was2Cics.driveIntoCics("CICSREG", "CTS10002", /*"DEFAULT",*/ ct10002XCommareaWrapper1.getByteBuffer());
 
     return BigDecimal.TEN;
   }

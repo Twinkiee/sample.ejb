@@ -1,4 +1,4 @@
-package ejb;
+package com.sample.ejb;
 
 import com.sample.ejb.api.RemoteExecutorEjb;
 import javax.ejb.Remote;

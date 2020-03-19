@@ -22,10 +22,10 @@ public class CicsCallerImpl implements CicsCaller {
 
   @Override
   public Record callCicsTransaction(String registerName, String serviceName,
-      String codIstituto, byte[] input)
+      /*String codIstituto,*/ byte[] input)
       throws ResourceException {
 
-    try (AutoClosableConnection connection = cicsConnectionFactory.getConnection(codIstituto, registerName)
+    try (AutoClosableConnection connection = cicsConnectionFactory.getConnection("DEFAULT", /*codIstituto*/ registerName)
         ; AutoClosableInteraction interaction = getInteraction(connection)) {
 
       InteractionSpecImpl interactionSpec = getInteractionSpec(serviceName);

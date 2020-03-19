@@ -1,4 +1,4 @@
-package ejb;
+package com.sample.ejb;
 
 import static javax.ejb.TransactionAttributeType.MANDATORY;
 
@@ -6,14 +6,12 @@ import com.sample.ejb.api.RemoteExecutorEjb;
 import com.sample.ejb.bean.CT10002XCommareaWrapper1;
 import com.sample.ejb.bean.CT30024XCommareaWrapper1;
 import com.sample.ejb.api.Was2CicsEjb;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -22,14 +20,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
-@Remote(EquinixCts30024Ejb03.class)
-public class EquinixCts30024Ejb03 implements RemoteExecutorEjb {
+@Remote(EquinixCts30024Ejb02.class)
+public class EquinixCts30024Ejb02 implements RemoteExecutorEjb {
 
   public static final int ON_LINE = 0;
   public static final int BATCH = 1;
   public static final int REUTIL_ON = 2;
 
-  private static final Logger logger = LoggerFactory.getLogger(EquinixCts30024Ejb03.class);
+  private static final Logger logger = LoggerFactory.getLogger(EquinixCts30024Ejb02.class);
 
   @Resource
   private DataSource dataSource;
@@ -48,38 +46,24 @@ public class EquinixCts30024Ejb03 implements RemoteExecutorEjb {
 
       logger.info("Default schema [ {} ]", dataSource.getConnection().getSchema());
 
-      logger.info("Calling CICS module 'EC01' (Timestamp)");
-      long time = System.nanoTime();
-      final String timestamp = getTimestamp();
-      logger.info("CICS module 'EC01' called in [ {} ] ns; returned timestamp [ {} ]", System.nanoTime() - time, timestamp);
-
       logger.info("Calling CICS module 'A2121-OBTENER-SALDO'");
-      time = System.nanoTime();
+      long time = System.nanoTime();
       final BigDecimal saldo = retrieveSaldo(ct30024XCommareaWrapper1);
-      logger.info("CICS module 'A2121-OBTENER-SALDO' called in [ {} ] ns", System.nanoTime() - time);
+      logger.info("CICS module 'A2121-OBTENER-SALDO' called in [ {} ]", System.nanoTime() - time);
 
       ct30024XCommareaWrapper1.setSaldo(saldo);
 
       time = System.nanoTime();
-      doUpdate(connection, ct30024XCommareaWrapper1, timestamp);
+      doUpdate(connection, ct30024XCommareaWrapper1);
       logger.info("Remote EJB update executed in [ {} ] ns", System.nanoTime() - time);
 
     } catch (SQLException e) {
 
       logger.error("Error while executing the remote EJB", e);
-      throw new EJBException(e);
+      e.printStackTrace();
     }
 
     return ct30024XCommareaWrapper1.getByteBuffer();
-  }
-
-  private String getTimestamp() {
-    try {
-      return new String(was2Cics.driveIntoCics("CICSREG", "EC01", new byte [18]), "Cp1047");
-    } catch (UnsupportedEncodingException e) {
-      logger.error("An error occurred when encoding timestamp module (EC01) return value", e);
-      throw new EJBException(e);
-    }
   }
 
   // TODO Complete implementation with returning value
@@ -110,14 +94,14 @@ public class EquinixCts30024Ejb03 implements RemoteExecutorEjb {
     ct10002XCommareaWrapper1.setNumCtaInt(ct30024XCommareaWrapper1.getNumCtaInt());
     ct10002XCommareaWrapper1.setCodEmpresa(ct30024XCommareaWrapper1.getCodEmpresa());
 
-    was2Cics.driveIntoCics("CICSREG", "WLMXMULT", ct10002XCommareaWrapper1.getByteBuffer());
+    was2Cics.driveIntoCics("CICSREG", "CTS10002", ct10002XCommareaWrapper1.getByteBuffer());
 
     return BigDecimal.TEN;
   }
 
 
   private void doUpdate(Connection connection,
-      CT30024XCommareaWrapper1 wrapper, String timestamp) throws SQLException {
+      CT30024XCommareaWrapper1 wrapper) throws SQLException {
 
 //          *--- DATOS DE ARQUITECTURA - GLOBALES
 //          *--- ARCHITECTURE DATA - GLOBALS
@@ -474,7 +458,7 @@ public class EquinixCts30024Ejb03 implements RemoteExecutorEjb {
         + "                        ? ,\n"
         + "                        ? ,\n"
         + "                        ? ,\n"
-        + "                        ? ,\n"
+        + "                        CURRENT TIMESTAMP ,\n"
         + "                        ? ,\n"
         + "                        ? ,\n"
         + "                        ? ,\n"
@@ -545,82 +529,79 @@ public class EquinixCts30024Ejb03 implements RemoteExecutorEjb {
         + "                        ? ,\n"
         + "                        ? )";
 
-    int i = 1;
     final PreparedStatement preparedStatement = connection.prepareStatement(sql);
-    preparedStatement.setString(i++, wrapper.getCodTipExpe());
-    preparedStatement.setInt(i++, wrapper.getNumCtaInt());
-    preparedStatement.setString(i++, wrapper.getCodEmpresa());
-    preparedStatement.setString(i++, wrapper.getFecOperacion());
-    preparedStatement.setString(i++, timestamp);
-    preparedStatement.setString(i++, wrapper.getCodOperacion());
-    preparedStatement.setString(i++, wrapper.getCodRefer());
-    preparedStatement.setString(i++, wrapper.getDecRefAmpliada());
-    preparedStatement.setBigDecimal(i++, wrapper.getImpMovimiento());
-    preparedStatement.setString(i++, wrapper.getIndNaturaleza());
-    preparedStatement.setString(i++, wrapper.getFecContable());
-    preparedStatement.setString(i++, wrapper.getFecValor());
-    preparedStatement.setBigDecimal(i++, wrapper.getSaldo());
-    preparedStatement.setString(i++, wrapper.getTxtMovimiento());
-    preparedStatement.setLong(i++, wrapper.getNumOperacion());
-    preparedStatement.setLong(i++, wrapper.getNumOperEnlaza());
-    preparedStatement.setString(i++, wrapper.getIndOperEnlazada());
-    preparedStatement.setString(i++, wrapper.getIndPteLibreta());
-    preparedStatement.setString(i++, wrapper.getIndExtraEnvi());
-    preparedStatement.setString(i++, wrapper.getNumeroDocumento());
-    preparedStatement.setString(i++, wrapper.getIndMovan());
-    preparedStatement.setString(i++, wrapper.getIndCondo());
-    preparedStatement.setString(i++, wrapper.getIndOrigenMov());
-    preparedStatement.setString(i++, wrapper.getIndSoporte());
-    preparedStatement.setString(i++, wrapper.getCodTipoInterven());
-    preparedStatement.setString(i++, wrapper.getNombre());
-    preparedStatement.setString(i++, wrapper.getCodIdentifica());
-    preparedStatement.setString(i++, wrapper.getFecVencimiento());
-    preparedStatement.setString(i++, wrapper.getCodEntCp());
-    preparedStatement.setInt(i++, wrapper.getCodSucCp());
-    preparedStatement.setInt(i++, wrapper.getCodDigControlcp());
-    preparedStatement.setLong(i++, wrapper.getNumCuentaCp());
-    preparedStatement.setString(i++, wrapper.getFechaInicio());
-    preparedStatement.setString(i++, wrapper.getFecModificacion());
-    preparedStatement.setString(i++, wrapper.getCodUsuAlta());
-    preparedStatement.setString(i++, wrapper.getCodCentOrig());
-    preparedStatement.setLong(i++, wrapper.getCodDesfi());
-    preparedStatement.setString(i++, wrapper.getNumCtaCont());
-    preparedStatement.setString(i++, wrapper.getCodReferenciaOpe());
-    preparedStatement.setString(i++, wrapper.getIndTrunc());
-    preparedStatement.setString(i++, wrapper.getCodNumDocOficia());
-    preparedStatement.setString(i++, wrapper.getCodEstsi());
-    preparedStatement.setString(i++, wrapper.getCodPais());
-    preparedStatement.setInt(i++, wrapper.getNumImposicion());
-    preparedStatement.setBigDecimal(i++, wrapper.getSalActual());
-    preparedStatement.setString(i++, timestamp);
-    preparedStatement.setString(i++, wrapper.getCodUsuModif());
-    preparedStatement.setInt(i++, wrapper.getCodDominio());
-    preparedStatement.setInt(i++, wrapper.getNumNodo());
-    preparedStatement.setString(i++, wrapper.getIndModTabla());
-    preparedStatement.setInt(i++, wrapper.getNumMovimento());
-    preparedStatement.setBigDecimal(i++, wrapper.getImpOriginario());
-    preparedStatement.setString(i++, wrapper.getCodMonedaOrig());
-    preparedStatement.setBigDecimal(i++, wrapper.getImpConta());
-    preparedStatement.setBigDecimal(i++, wrapper.getImpCommissioni());
-    preparedStatement.setBigDecimal(i++, wrapper.getImpSpese());
-    preparedStatement.setBigDecimal(i++, wrapper.getImpSpeseReclam());
-    preparedStatement.setString(i++, wrapper.getCodGruppoSpesa());
-    preparedStatement.setString(i++, wrapper.getFecDisponibilita());
-    preparedStatement.setString(i++, wrapper.getIndInvioContab());
-    preparedStatement.setString(i++, wrapper.getIndMovst());
-    preparedStatement.setString(i++, wrapper.getIndMovforVal());
-    preparedStatement.setString(i++, wrapper.getIndMovforSco());
-    preparedStatement.setString(i++, wrapper.getIndMovforBlo());
-    preparedStatement.setString(i++, wrapper.getIndMovforImp());
-    preparedStatement.setString(i++, wrapper.getIndMovforRis());
-    preparedStatement.setString(i++, wrapper.getCodCheck());
-    preparedStatement.setLong(i++, wrapper.getNumRelCliente());
-    preparedStatement.setInt(i++, wrapper.getNumMovst());
-    preparedStatement.setInt(i++, wrapper.getNumDePuesto());
-    preparedStatement.setString(i++, wrapper.getTipDisponibilita());
-    preparedStatement.setString(i++, wrapper.getTipLiquidita());
-    preparedStatement.setString(i++, wrapper.getCodCanale());
-    preparedStatement.setString(i, wrapper.getCodProcOrig());
+    preparedStatement.setString(1, wrapper.getCodTipExpe());
+    preparedStatement.setInt(2, wrapper.getNumCtaInt());
+    preparedStatement.setString(3, wrapper.getCodEmpresa());
+    preparedStatement.setString(4, wrapper.getFecOperacion());
+    preparedStatement.setString(5, wrapper.getCodOperacion());
+    preparedStatement.setString(6, wrapper.getCodRefer());
+    preparedStatement.setString(7, wrapper.getDecRefAmpliada());
+    preparedStatement.setBigDecimal(8, wrapper.getImpMovimiento());
+    preparedStatement.setString(9, wrapper.getIndNaturaleza());
+    preparedStatement.setString(10, wrapper.getFecContable());
+    preparedStatement.setString(11, wrapper.getFecValor());
+    preparedStatement.setBigDecimal(12, wrapper.getSaldo());
+    preparedStatement.setString(13, wrapper.getTxtMovimiento());
+    preparedStatement.setLong(14, wrapper.getNumOperacion());
+    preparedStatement.setLong(15, wrapper.getNumOperEnlaza());
+    preparedStatement.setString(16, wrapper.getIndOperEnlazada());
+    preparedStatement.setString(17, wrapper.getIndPteLibreta());
+    preparedStatement.setString(18, wrapper.getIndExtraEnvi());
+    preparedStatement.setString(19, wrapper.getNumeroDocumento());
+    preparedStatement.setString(20, wrapper.getIndMovan());
+    preparedStatement.setString(21, wrapper.getIndCondo());
+    preparedStatement.setString(22, wrapper.getIndOrigenMov());
+    preparedStatement.setString(23, wrapper.getIndSoporte());
+    preparedStatement.setString(24, wrapper.getCodTipoInterven());
+    preparedStatement.setString(25, wrapper.getNombre());
+    preparedStatement.setString(26, wrapper.getCodIdentifica());
+    preparedStatement.setString(27, wrapper.getFecVencimiento());
+    preparedStatement.setString(28, wrapper.getCodEntCp());
+    preparedStatement.setInt(29, wrapper.getCodSucCp());
+    preparedStatement.setInt(30, wrapper.getCodDigControlcp());
+    preparedStatement.setLong(31, wrapper.getNumCuentaCp());
+    preparedStatement.setString(32, wrapper.getFechaInicio());
+    preparedStatement.setString(33, wrapper.getFecModificacion());
+    preparedStatement.setString(34, wrapper.getCodUsuAlta());
+    preparedStatement.setString(35, wrapper.getCodCentOrig());
+    preparedStatement.setLong(36, wrapper.getCodDesfi());
+    preparedStatement.setString(37, wrapper.getNumCtaCont());
+    preparedStatement.setString(38, wrapper.getCodReferenciaOpe());
+    preparedStatement.setString(39, wrapper.getIndTrunc());
+    preparedStatement.setString(40, wrapper.getCodNumDocOficia());
+    preparedStatement.setString(41, wrapper.getCodEstsi());
+    preparedStatement.setString(42, wrapper.getCodPais());
+    preparedStatement.setInt(43, wrapper.getNumImposicion());
+    preparedStatement.setBigDecimal(44, wrapper.getSalActual());
+    preparedStatement.setString(45, wrapper.getCodUsuModif());
+    preparedStatement.setInt(46, wrapper.getCodDominio());
+    preparedStatement.setInt(47, wrapper.getNumNodo());
+    preparedStatement.setString(48, wrapper.getIndModTabla());
+    preparedStatement.setInt(49, wrapper.getNumMovimento());
+    preparedStatement.setBigDecimal(50, wrapper.getImpOriginario());
+    preparedStatement.setString(51, wrapper.getCodMonedaOrig());
+    preparedStatement.setBigDecimal(52, wrapper.getImpConta());
+    preparedStatement.setBigDecimal(53, wrapper.getImpCommissioni());
+    preparedStatement.setBigDecimal(54, wrapper.getImpSpese());
+    preparedStatement.setBigDecimal(55, wrapper.getImpSpeseReclam());
+    preparedStatement.setString(56, wrapper.getCodGruppoSpesa());
+    preparedStatement.setString(57, wrapper.getFecDisponibilita());
+    preparedStatement.setString(58, wrapper.getIndInvioContab());
+    preparedStatement.setString(59, wrapper.getIndMovst());
+    preparedStatement.setString(60, wrapper.getIndMovforVal());
+    preparedStatement.setString(61, wrapper.getIndMovforSco());
+    preparedStatement.setString(62, wrapper.getIndMovforBlo());
+    preparedStatement.setString(63, wrapper.getIndMovforImp());
+    preparedStatement.setString(64, wrapper.getIndMovforRis());
+    preparedStatement.setString(65, wrapper.getCodCheck());
+    preparedStatement.setLong(66, wrapper.getNumRelCliente());
+    preparedStatement.setInt(67, wrapper.getNumMovst());
+    preparedStatement.setInt(68, wrapper.getNumDePuesto());
+    preparedStatement.setString(69, wrapper.getTipDisponibilita());
+    preparedStatement.setString(70, wrapper.getTipLiquidita());
+    preparedStatement.setString(71, wrapper.getCodCanale());
+    preparedStatement.setString(72, wrapper.getCodProcOrig());
     preparedStatement.executeUpdate();
   }
 
